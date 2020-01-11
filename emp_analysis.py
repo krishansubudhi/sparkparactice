@@ -29,6 +29,9 @@ if __name__ == '__main__':
     * using pyspark shell.
     '''
     
+    #download data from 
+    #https://www.ers.usda.gov/data-products/atlas-of-rural-and-small-town-america/download-the-data/
+
     #read csv
     job_df = (spark.read.format("csv")
         .option("header","true")

@@ -13,11 +13,13 @@ schema = 'name STRING , age INT, `company name` STRING'
 
 if __name__ == '__main__':
 
+    #write json data to file
     jsonstring = json.dumps(data)
     print(jsonstring)
     with open('data.json','w') as f:
         f.write(jsonstring)
 
+    #read the json file
     with open('data.json','r') as f:
         print(json.load(f))
     spark = (SparkSession
