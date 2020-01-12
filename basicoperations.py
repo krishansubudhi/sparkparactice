@@ -5,9 +5,8 @@ import sys
 INCOME_FILE = sys.argv[1]
 SCHEMA = "FIPS INT,State STRING,County STRING,MedHHInc BIGINT,PerCapitaInc LONG,PovertyUnder18Pct DOUBLE, PovertyAllAgesPct DOUBLE,Deep_Pov_All DOUBLE,Deep_Pov_Children DOUBLE,PovertyUnder18Num LONG,PovertyAllAgesNum LONG"
 
-#python basicoperations.py ..\Rural_Atlas_Update20\Income.csv    
-
 if __name__ == '__main__':
+    #python basicoperations.py ..\Rural_Atlas_Update20\Income.csv  
     print ('running basic operations in spark')
 
     spark = (SparkSession
@@ -23,6 +22,9 @@ if __name__ == '__main__':
     poverty_df = df.select('state', 'county', 'PovertyAllAgesPct', 'Deep_Pov_All','PovertyAllAgesNum')
 
     poverty_df.show(10)
+
+    print('Distinct states')
+    poverty_df.select('state').distinct().orderBy('state').show()
 
     print('Find total population and add that column, drop all ages num column')
     poverty_df = poverty_df.withColumn(
@@ -52,7 +54,7 @@ if __name__ == '__main__':
     #not very elegant solution. How to print other columns?
     max_row = state_df.groupBy().agg(max('avgPovertyPct')).collect()[0]
     max_poverty_val = max_row[0]
-    state_df.filter(col('avgPovertyPct') == max_poverty_val).show()
+    state_df.filter(col('avgPovertyPct') == max_poverty _val).show()
 
     #easier way
     rows = state_df.sort(col('avgPovertyPct'), ascending=False).head(1)#head does not return dataframe but list of rows. 
